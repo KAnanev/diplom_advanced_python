@@ -5,8 +5,8 @@ from scripts.functions_find_people import sex_pair_num
 
 import unittest
 
-api = '4be8e95f312a1b2b079b56d3dc91043d2862a113385994b4752d8faf59f6ac222717f1c8c1dd669196f18'
-name = 'edzokamisama'
+api = ''
+name = ''
 
 
 class TestUser(unittest.TestCase):
