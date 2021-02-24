@@ -80,5 +80,8 @@ class User:
                  '"owner_id": ' + str(target_id) + ', '
                                                    '"album_id": "profile", '
                                                    '"rev": 1,'
-                                                   '"extended": 1})]@.items;', v='5.92')
+                                                   '"extended": 1'
+                                                   '})]@.items;',
+            v='5.92'
+        )
         return result[0]
