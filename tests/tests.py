@@ -1,5 +1,5 @@
 from scripts.class_user import User
-from scripts.class_user import User_Main
+from scripts.class_user import UserMain
 from scripts.functions_find_people import sex_pair_num
 
 
@@ -20,7 +20,7 @@ class TestUser(unittest.TestCase):
 
 class TestUser_Main(unittest.TestCase):
     def setUp(self) -> None:
-        self.test_user = User_Main(api)
+        self.test_user = UserMain(api)
 
     def test_user_id(self):
         self.test_user.get_user(name)

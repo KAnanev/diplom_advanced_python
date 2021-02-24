@@ -2,17 +2,18 @@ import time
 import json
 import prompt
 
-from scripts.class_user import User_Main, User_Target
+from scripts.class_user import UserMain, UserTarget
 from db.db_scripts import DB
 from scripts.functions_collect import collect_list, collect_json_list
 from pprint import pprint
+from scripts.function_add_dir import add_dir
 
 
 def main():
     api_token = prompt.string('Введите API-токен: ')
     name_user = prompt.string('Введите Ваш ID или страницу: ')
 
-    user_main = User_Main(api_token)
+    user_main = UserMain(api_token)
     user_main.get_user(name_user)
 
     with DB() as connect:
@@ -27,7 +28,7 @@ def main():
     with DB() as connect:
         connect.insert_target_users(user_db_id, list_target_users)
 
-    user_target = User_Target(api_token)
+    user_target = UserTarget(api_token)
 
     def collect_temp_list_photo(user_id):
         temp_list_photo = []
@@ -62,6 +63,8 @@ def main():
             list_target_users)
     )
     pprint(output_list)
+
+    add_dir()
 
     with open(
             'output_file/data_id{0}.json'.format(user_main.user_id),

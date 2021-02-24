@@ -11,7 +11,7 @@ class User:
         self.version = '5.130'
 
 
-class User_Main(User):
+class UserMain(User):
     user_id = age = sex = city = relation = bdate = None
 
     def get_user(self, user_name):
@@ -74,7 +74,7 @@ class User_Main(User):
         return result
 
 
-class User_Target(User):
+class UserTarget(User):
 
     def get_user(self, target_id):
         result = self.vk_api.execute(
