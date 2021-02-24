@@ -152,4 +152,4 @@ fabric.properties
 
 # Project files
 /output_file
-/db
+/db/users.db

@@ -39,7 +39,7 @@ class DB:
                         CREATE TABLE if not exists target_users(
                         id integer PRIMARY KEY AUTOINCREMENT,
                         main_user_id integer REFERENCES main_users (id),
-                        target_user integer UNIQUE);
+                        target_user integer);
                         """)
         self.con.commit()
 

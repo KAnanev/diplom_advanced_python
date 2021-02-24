@@ -2,7 +2,7 @@ import time
 import json
 import prompt
 
-from scripts.class_user import UserMain, UserTarget
+from scripts.class_user import User
 from db.db_scripts import DB
 from scripts.functions_collect import collect_list, collect_json_list
 from pprint import pprint
@@ -10,11 +10,12 @@ from scripts.function_add_dir import add_dir
 
 
 def main():
-    api_token = prompt.string('Введите API-токен: ')
-    name_user = prompt.string('Введите Ваш ID или страницу: ')
+    login = prompt.string('Введите Ваш логин: ')
+    password = prompt.string('Введите Ваш Пароль: ')
+    user = prompt.string('Введите Ваш ID: ')
 
-    user_main = UserMain(api_token)
-    user_main.get_user(name_user)
+    user_main = User(login, password)
+    user_main.get_user(user)
 
     with DB() as connect:
         connect.create_db()
@@ -28,11 +29,9 @@ def main():
     with DB() as connect:
         connect.insert_target_users(user_db_id, list_target_users)
 
-    user_target = UserTarget(api_token)
-
     def collect_temp_list_photo(user_id):
         temp_list_photo = []
-        for i in user_target.get_user(user_id):
+        for i in user_main.get_target_user(user_id):
             temp_list_photo.append({
                 'id': i['owner_id'],
                 'comments': i['comments']['count'],

@@ -1,24 +1,26 @@
-from vk import Session, API
+import vk_requests
 from scripts.functions_find_people import sex_pair
 from scripts.functions_find_people import calculate_age
 
+APP_ID = 7771470
+
 
 class User:
-
-    def __init__(self, user_token):
-        session = Session(user_token)
-        self.vk_api = API(session)
-        self.version = '5.130'
-
-
-class UserMain(User):
     user_id = age = sex = city = relation = bdate = None
 
-    def get_user(self, user_name):
-        result = self.vk_api.users.get(
-            user_ids=user_name,
-            fields='relation, sex, bdate, city',
-            v=self.version
+    def __init__(self, login, password):
+        self.api = vk_requests.create_api(
+            app_id=APP_ID,
+            login=login,
+            password=password,
+            scope=['offline', 'photos', 'status'],
+            interactive=True
+        )
+
+    def get_user(self, user):
+        result = self.api.users.get(
+            user_ids=user,
+            fields='relation, sex, bdate, city'
         )[0]
         self.user_id = result['id']
         self.age = calculate_age(
@@ -42,10 +44,9 @@ class UserMain(User):
             else input('Введите Ваш пол: ')
 
         def check_city(city):
-            result_city = self.vk_api.database.getCities(
+            result_city = self.api.database.getCities(
                 country_id=1,
-                q=city,
-                v=self.version
+                q=city
             )['items'][0]['id']
             return result_city
 
@@ -54,15 +55,14 @@ class UserMain(User):
 
     def find_pair(self):
 
-        temp_result = self.vk_api.users.search(
+        temp_result = self.api.users.search(
             count=1000,
             user_ids=self.user_id,
             city=self.city,
             sex=sex_pair(self.sex),
             status=6,
             age_from=self.age - 5,
-            age_to=self.age + 5,
-            v=self.version
+            age_to=self.age + 5
         )['items']
 
         result = []
@@ -73,15 +73,12 @@ class UserMain(User):
 
         return result
 
-
-class UserTarget(User):
-
-    def get_user(self, target_id):
-        result = self.vk_api.execute(
+    def get_target_user(self, target_id):
+        result = self.api.execute(
             code='return [API.photos.get('
                  '{'
                  '"owner_id": ' + str(target_id) + ', '
-                 '"album_id": "profile", '
-                 '"rev": 1,'
-                 '"extended": 1})]@.items;', v='5.130')
+                                                   '"album_id": "profile", '
+                                                   '"rev": 1,'
+                                                   '"extended": 1})]@.items;', v='5.92')
         return result[0]
