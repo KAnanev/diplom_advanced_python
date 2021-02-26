@@ -1,5 +1,3 @@
-from scripts.class_user import User
-
 
 import unittest
 

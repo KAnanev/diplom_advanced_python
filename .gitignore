@@ -153,3 +153,6 @@ fabric.properties
 # Project files
 /output_file
 /db/users.db
+
+#token
+/tests/fixtures/token.py
