@@ -11,7 +11,7 @@ from scripts.function_add_dir import add_dir
 
 def main():
     login = prompt.string('Введите Ваш логин: ')
-    password = prompt.string('Введите Ваш Пароль: ')
+    password = prompt.secret('Введите Ваш Пароль: ')
     user = prompt.string('Введите Ваш ID: ')
 
     user_main = User(login, password)
